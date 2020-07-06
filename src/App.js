@@ -5,57 +5,41 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      initialQuote: "Harambe is the king",
-      author: "Pichaya Puttekulangkura",
       quote: [
         {
-          objQuote: "Be yourself; everyone else is already taken.",
-          objAuthor: "Henry Ford",
-        },
-
-        {
-          objQuote: "You've gotta dance like there's nobody watching",
-          objAuthor: "THOR",
-        },
-
-        {
-          objQuote: "Be the change that you wish to see in the world",
-          objAuthor: "LINUS Techs",
-        },
-
-        {
-          objQuote: "No one can make you feel inferior without your consent.",
-          objAuthor: "Pokemane",
-        },
-
-        {
-          objQuote: "Live as if you were to die tomorrow.",
-          objAuthor: "Make a wish kid",
-        },
-
-        {
-          objQuote: "Harambe is the king",
-          objAuthor: "Pichaya Puttekulangkura",
+          quote: "",
+          author: "",
         },
       ],
     };
   }
 
+  componentDidMount = () => {
+    fetch(
+      "https://gist.githubusercontent.com/natebass/b0a548425a73bdf8ea5c618149fe1fce/raw/f4231cd5961f026264bb6bb3a6c41671b044f1f4/quotes.json"
+    )
+      .then((quote) => quote.json())
+      .then((quote) =>
+        this.setState({
+          quote: quote,
+        })
+      );
+  };
   handleClick = () => {
-    let randomIndex = Math.floor(Math.random() * 5);
-    this.setState({
-      initialQuote: this.state.quote[randomIndex].objQuote,
-      author: this.state.quote[randomIndex].objAuthor,
-    });
+    this.setState({});
   };
   render() {
+    let ranInt = Math.floor(Math.random() * 100);
     return (
       <div id="quote-box">
         <div id="text">
-          <h1>{this.state.initialQuote}</h1>
+          {this.state.quote[ranInt] ? this.state.quote[ranInt].quote : ""}
         </div>
         <div id="author">
-          <h2>By: {this.state.author} </h2>
+          <h2>
+            By:
+            {this.state.quote[ranInt] ? this.state.quote[ranInt].author : ""}
+          </h2>
         </div>
         <button id="new-quote" onClick={this.handleClick}>
           New quote
