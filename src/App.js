@@ -1,6 +1,17 @@
 import React, { Component } from "react";
 import "./App.css";
+import "fontsource-roboto";
+import QuoteBox from "./Components/QuoteBox";
+import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@material-ui/core/styles";
 
+const styles = {
+  container: {
+    alignItems: "center",
+    display: "flex",
+    height: "100vh",
+  },
+};
 class App extends Component {
   constructor(props) {
     super(props);
@@ -31,32 +42,19 @@ class App extends Component {
   render() {
     let ranInt = Math.floor(Math.random() * 100);
     return (
-      <div id="quote-box">
-        <div id="text">
-          {this.state.quote[ranInt] ? this.state.quote[ranInt].quote : ""}
-        </div>
-        <div id="author">
-          <h2>
-            By:
-            {this.state.quote[ranInt] ? this.state.quote[ranInt].author : ""}
-          </h2>
-        </div>
-        <button id="new-quote" onClick={this.handleClick}>
-          New quote
-        </button>
-        <div>
-          <a
-            id="tweet-quote"
-            href="https://www.twitter.com/intent/tweet"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Tweet this quote
-          </a>
-        </div>
-      </div>
+      <Grid className={this.props.classes.container} container justify="center">
+        <Grid xs={12} lg={8} item>
+          {this.state.quote[ranInt] ? (
+            <QuoteBox
+              handleClick={this.handleClick}
+              state={this.state}
+              ranInt={ranInt}
+            ></QuoteBox>
+          ) : null}
+        </Grid>
+      </Grid>
     );
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
