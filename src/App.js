@@ -4,6 +4,8 @@ import "fontsource-roboto";
 import QuoteBox from "./Components/QuoteBox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
+// import NewButton from "./Components/NewButton";
+import { StylesProvider } from "@material-ui/core/styles";
 
 const styles = {
   container: {
@@ -42,17 +44,26 @@ class App extends Component {
   render() {
     let ranInt = Math.floor(Math.random() * 100);
     return (
-      <Grid className={this.props.classes.container} container justify="center">
-        <Grid xs={12} lg={8} item>
-          {this.state.quote[ranInt] ? (
-            <QuoteBox
-              handleClick={this.handleClick}
-              state={this.state}
-              ranInt={ranInt}
-            ></QuoteBox>
-          ) : null}
+      <StylesProvider injectFirst>
+        <Grid
+          className={this.props.classes.container}
+          container
+          justify="center"
+        >
+          <Grid xs={12} lg={8} item>
+            {this.state.quote[ranInt] ? (
+              <QuoteBox
+                handleClick={this.handleClick}
+                state={this.state}
+                ranInt={ranInt}
+              ></QuoteBox>
+            ) : null}
+          </Grid>
         </Grid>
-      </Grid>
+        {/* <div style={{ textAlign: "center"}}>
+          <NewButton>Plain CSS</NewButton>
+        </div> */}
+      </StylesProvider>
     );
   }
 }
